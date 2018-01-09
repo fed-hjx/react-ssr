@@ -1,0 +1,10 @@
+node_modules
+2n-dev
+2n-pro
+logs
+npm-debug.log
+.idea
+.DS_Store
+.map
+package-lock.json
+
