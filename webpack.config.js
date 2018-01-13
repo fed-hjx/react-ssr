@@ -7,14 +7,14 @@ const website = {
 }
 module.exports = {
         entry: { 
-            vendor: ['react', 'react-dom'],
+            // vendor: ['react', 'react-dom'],
             sss: './client/client.js'
         },
         output: {
             // publicPath: website.publicPath,
             path: path.resolve(__dirname, 'dist'),
-            filename: 'js/[name].js',
-            chunkFilename: '[name].js' //注意这里，用[name]可以自动生成路由名称对应的js文件
+            filename: 'js/[name].[hash].js',
+            chunkFilename: 'js/[name].[hash].js' //注意这里，用[name]可以自动生成路由名称对应的js文件
         },
         module: {
             rules: [
@@ -89,14 +89,18 @@ module.exports = {
                 },
                 hash: true,
             }),
+            new webpack.DllReferencePlugin({
+                context: __dirname,
+                manifest: require('./dist/js/vendors-manifest.json')
+            }),
             /*
             使用CommonsChunkPlugin插件来处理重复代码
             因为vendor.js和index.js都引用了spa-history, 如果不处理的话, 两个文件里都会有spa-history包的代码,
             我们用CommonsChunkPlugin插件来使共同引用的文件只打包进vendor.js
             */
-            new webpack.optimize.CommonsChunkPlugin({
-                names: ['vendor', 'manifest']
-            }),
+            // new webpack.optimize.CommonsChunkPlugin({
+            //     names: ['vendor', 'manifest']
+            // }),
             /*
             首先把重复引用的库打包进vendor.js, 这时候我们的代码里已经没有重复引用了, chunk文件名存在vendor.js中,
             然后我们在执行一次CommonsChunkPlugin, 把所有chunk的文件名打包到manifest.js中.
@@ -120,6 +124,6 @@ module.exports = {
             //服务端压缩是否开启
             compress: true,
             //配置服务端口号
-            port: 1717
+            port: 1718
         }
 }
