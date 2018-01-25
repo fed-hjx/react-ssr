@@ -11,13 +11,13 @@ class Home extends React.Component{
         super()
     }
     
-    async componentDidMount() {
+    componentDidMount() {
         this.props.actions.fetchUserInfo();
         
-        let Test = await import ('./test.js');
+        // let Test = await import ('./test.js');
         // console.log(aa)
-        ReactDOM.render(<Test></Test>,document.getElementById('test'))
-        console.log(222)
+        // ReactDOM.render(<Test></Test>,document.getElementById('test'))
+        // console.log(222)
     }
     
     render(){

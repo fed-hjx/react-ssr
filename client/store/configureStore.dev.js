@@ -6,15 +6,17 @@ import { createLogger } from 'redux-logger';
 const logger = createLogger({ collapsed: true });
 
 export default function configureStore(preloadedState) {
-    const store = createStore(
-        rootReducer,
-        preloadedState,
-        compose(
-            applyMiddleware(thunk, logger),
-            // window.devToolsExtension ? window.devToolsExtension() : f => f
-        //   DevTools.instrument()
+
+    let store = createStore(
+            rootReducer,
+            preloadedState,
+            compose(
+                applyMiddleware(thunk, logger),
+                // window.devToolsExtension ? window.devToolsExtension() : f => f
+                //   DevTools.instrument()
+            )
         )
-    )
+    
 
     if (module.hot) {
         module.hot.accept('../reducers', () => {

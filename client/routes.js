@@ -8,6 +8,7 @@ import asyncComponent from './async-component'; // 异步加载组件公共方�
 const isNode = () => {
     return (global && typeof global == 'object' && global.global === global);
 };
+
 // const Home = asyncComponent(() => import('./components/home'));
 // const About = asyncComponent(() => import('./components/about'));
 
