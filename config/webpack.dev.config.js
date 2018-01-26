@@ -19,7 +19,7 @@ module.exports = {
     },
     output: {
         publicPath: '/',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '../dist/client'),
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].js' //注意这里，用[name]可以自动生成路由名称对应的js文件
     },

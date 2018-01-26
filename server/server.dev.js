@@ -31,6 +31,7 @@ require('asset-require-hook')({
 
 const app = require('./app.js'),
     convert = require('koa-convert'),
+    staticCache = require("koa-static-cache"),
     webpack = require('webpack'),
     fs = require('fs'),
     path = require('path'),
@@ -60,6 +61,10 @@ compiler.plugin('emit', (compilation, callback) => {
 app.use(views(path.resolve(__dirname, '../views/dev'), { map: { html: 'ejs' } }))
 app.use(clientRoute)
 app.use(router.routes())
+        app.use(staticCache(path.resolve(__dirname, '../dist'), {
+            maxAge: 365 * 24 * 60 * 60,
+            gzip: true
+        }));
 app.use(router.allowedMethods())
 console.log(`\n==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.\n`)
 app.use(convert(devMiddleware(compiler, {

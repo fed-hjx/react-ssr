@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "webpack-dev-server -d --hot --env.dev --env.config dev --config ./config/webpack.client.config.js",
     "sdev": "cross-env NODE_ENV=development nodemon ./server/server.dev.js --watch server --watch build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --config ./config/webpack.pro.config.js --progress",
+    "clean": "rimraf ./dist/client/* && rimraf ./dist/server/* && rimraf ./views/prod/*",
+    "start": "node ./dist/server/server.js",
+    "pm2": "pm2"
   },
   "keywords": [],
   "author": "",
@@ -25,8 +28,11 @@
     "koa-logger": "^3.1.0",
     "koa-router": "^7.3.0",
     "koa-session": "^5.5.1",
+    "koa-static": "^4.0.2",
+    "koa-static-cache": "^5.1.1",
     "koa-views": "^6.1.3",
     "lodash.isplainobject": "^4.0.6",
+    "pm2": "^2.9.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
@@ -63,6 +69,7 @@
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.4.0",
     "redux-logger": "^3.0.6",
+    "rimraf": "^2.6.2",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
