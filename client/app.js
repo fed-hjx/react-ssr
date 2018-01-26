@@ -18,22 +18,13 @@ import DevTools from './public/tool/DevTools'
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            isMounted: false
-        }
     }
     
     componentDidMount() {
-        this.setState({
-            isMounted: true
-        })
-        console.log(666555)
+       
     }
     render(){
-        const {isMounted} = this.state;
-        console.log(isMounted,666)
         return <div>
-                {isMounted && <DevTools />}
                 <Switch>
                 {
                     routes.map((route, index) => (

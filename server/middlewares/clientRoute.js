@@ -14,7 +14,6 @@ async function clientRoute(ctx, next) {
     const context = {};
 
     if (isMath(routes,ctx.url)){//匹配组件路由
-
         const html = renderToString(
             <Provider store={store}>
                 <StaticRouter location={ctx.url} context={context}>
