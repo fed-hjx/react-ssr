@@ -7,7 +7,7 @@ import configureStore from './store/configureStore'
 import App from "./app";
 
 const store = configureStore(window.REDUX_STATE);
-
+console.log(5555)
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>

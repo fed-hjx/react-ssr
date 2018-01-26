@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import actions from "../../actions";
-import Tt from '../common'
 
 class About extends React.Component{
     constructor() {
         super()
     }
     render(){
-        return <div>about----=== <Tt /></div>
+        return <div>about----=== </div>
     }
 }
 function mapStateToProps(state) {

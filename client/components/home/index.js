@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import {Link} from 'react-router-dom';
 import actions from '../../actions';
-import Tt from '../common'
 
 class Home extends React.Component{
     constructor() {
@@ -13,15 +12,17 @@ class Home extends React.Component{
     
     componentDidMount() {
         this.props.actions.fetchUserInfo();
-        
-        // let Test = await import ('./test.js');
-        // console.log(aa)
-        // ReactDOM.render(<Test></Test>,document.getElementById('test'))
-        // console.log(222)
     }
-    
+    go = () =>{
+        console.log(this)
+    }
     render(){
-        return <div>home <Tt/><Link to="/about">go to about</Link><div id="test"></div></div>
+        console.log('render----')
+        return <div>home 
+            <Link to="/about">go to about</Link>
+            <div id="test" onClick={this.go}>132132</div>
+                
+            </div>
     }
 }
 function mapStateToProps(state) {

@@ -7,27 +7,27 @@ import configureStore from '../../client/store/configureStore'
 import App from '../../client/app'
 
 const store = configureStore()
-
+const isMath = (arr,str) =>{
+    return arr.some(v=>v.path===str);
+}
 async function clientRoute(ctx, next) {
-    const context = {}
-    const html = renderToString(
-        <Provider store={store}>
-            <StaticRouter location={ctx.url} context={context}>
-                <App />
-            </StaticRouter>
-        </Provider>
-    )
+    const context = {};
 
-    // context.url will contain the URL to redirect to if a <Redirect> was used
-    if (context.url) {
-        ctx.writeHead(302, {
-            Location: context.url
-        })
-    } else {
-        await ctx.render('index',{
+    if (isMath(routes,ctx.url)){//匹配组件路由
+
+        const html = renderToString(
+            <Provider store={store}>
+                <StaticRouter location={ctx.url} context={context}>
+                    <App />
+                </StaticRouter>
+            </Provider>
+        )
+        await ctx.render('index', {
             root: html,
             state: store.getState()
         })
+    }else{
+       await next()
     }
 }
 

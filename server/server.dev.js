@@ -39,27 +39,25 @@ const app = require('./app.js'),
     views = require('koa-views'),
     router = require('./routes'),
     clientRoute = require('./middlewares/clientRoute'),
-    config = require('../webpack.config'),
+    config = require('../config/webpack.dev.config'),
     port = process.env.port || 1888,
     compiler = webpack(config)
-
 // Webpack hook event to write html file into `/views/dev` from `/views/tpl` due to server render
-// compiler.plugin('emit', (compilation, callback) => {
-//     const assets = compilation.assets
-//     let file, data
+compiler.plugin('emit', (compilation, callback) => {
+    const assets = compilation.assets
+    let file, data
 
-//     Object.keys(assets).forEach(key => {
-//         console.log(key,444)
-//         if (key.match(/\.ejs$/)) {
-//             file = path.resolve(__dirname, key)
-//             data = assets[key].source()
-//             fs.writeFileSync(file, data)
-//         }
-//     })
-//     callback()
-// })
+    Object.keys(assets).forEach(key => {
+        if (key.match(/\.html$/)) {
+            file = path.resolve(__dirname, key)
+            data = assets[key].source()
+            fs.writeFileSync(file, data)
+        }
+    })
+    callback()
+})
 
-app.use(views(path.resolve(__dirname, '../views/dev'), { extension: 'ejs'}))
+app.use(views(path.resolve(__dirname, '../views/dev'), { map: { html: 'ejs' } }))
 app.use(clientRoute)
 app.use(router.routes())
 app.use(router.allowedMethods())
