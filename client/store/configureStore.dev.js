@@ -25,6 +25,9 @@ export default function configureStore(preloadedState,isClient) {
             store.replaceReducer(nextRootReducer)
         })
     }
-
+    // let isDone = false; //拦截请求 服务端请求接口
+    // while (!isDone) {
+    //     isDone = store.getState().userInfo.success || false;
+    // }
     return store
 }

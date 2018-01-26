@@ -21,6 +21,7 @@ async function clientRoute(ctx, next) {
                 </StaticRouter>
             </Provider>
         )
+        
         await ctx.render('index', {
             root: html,
             state: store.getState()

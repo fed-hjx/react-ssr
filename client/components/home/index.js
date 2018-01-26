@@ -11,17 +11,19 @@ class Home extends React.Component{
     }
     
     componentDidMount() {
-        this.props.actions.fetchUserInfo();
+        // !this.props.userInfo.success && this.props.actions.fetchUserInfo();
     }
     go = () =>{
-        console.log(this)
+    }
+    
+    componentWillMount() {
+        !this.props.userInfo.success && this.props.actions.fetchUserInfo();
     }
     render(){
-        console.log('render----')
         return <div>home 
             <Link to="/about">go to about</Link>
             <div id="test" onClick={this.go}>132132</div>
-                
+            <div>{this.props.userInfo.message}</div>
             </div>
     }
 }
