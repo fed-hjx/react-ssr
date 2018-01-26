@@ -9,7 +9,8 @@
     "build": "npm run clean && cross-env NODE_ENV=production webpack --config ./config/webpack.pro.config.js --progress",
     "clean": "rimraf ./dist/client/* && rimraf ./dist/server/* && rimraf ./views/prod/*",
     "start": "node ./dist/server/server.js",
-    "pm2": "pm2"
+    "pm2": "pm2",
+    "kill": "node ./node/kill.js"
   },
   "keywords": [],
   "author": "",
