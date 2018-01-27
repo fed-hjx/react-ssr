@@ -18,7 +18,6 @@ function getExternals() {
 }
 let clientConfig = {
     context: path.join(__dirname, '../'),
-    devtool: 'eval-source-map',
     entry: {
         client: './client/client.js',
         vendor: [

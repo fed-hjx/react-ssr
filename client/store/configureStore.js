@@ -3,4 +3,3 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     module.exports = require('./configureStore.dev')
 }
-console.log(process.env.NODE_ENV,4444)
