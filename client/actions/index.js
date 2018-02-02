@@ -4,8 +4,8 @@ const fetchSuccess = (data) => ({
     userInfo: data
 })
 function fetchUserInfo() {
-    return dispatch => {
-        Http.get('/pl3/info').then(rs=>{
+    return async (dispatch) => {
+        await Http.get('/pl3/info').then(rs=>{
             dispatch(fetchSuccess(rs))
         })
     }

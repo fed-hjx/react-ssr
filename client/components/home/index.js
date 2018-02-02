@@ -9,16 +9,14 @@ class Home extends React.Component{
     constructor() {
         super()
     }
-    
     componentDidMount() {
-        // !this.props.userInfo.success && this.props.actions.fetchUserInfo();
+        !this.props.userInfo.success && this.props.actions.fetchUserInfo();
     }
     go = () =>{
         console.log(this)
     }
-    
-    componentWillMount() {
-        !this.props.userInfo.success && this.props.actions.fetchUserInfo();
+    static fetch (store){
+        return store.dispatch(actions.fetchUserInfo())
     }
     render(){
         return <div>home 
