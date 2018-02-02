@@ -14,6 +14,7 @@ class Home extends React.Component{
         // !this.props.userInfo.success && this.props.actions.fetchUserInfo();
     }
     go = () =>{
+        console.log(this)
     }
     
     componentWillMount() {
