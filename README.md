@@ -1,4 +1,4 @@
-利用 React / koa 实现的应用。
+###利用 React / koa 实现的应用。
 
 1.配置 webpack + react 开发环境 done
 2.配置 react-router + redux     done
