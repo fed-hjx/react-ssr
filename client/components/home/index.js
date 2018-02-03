@@ -8,22 +8,40 @@ import actions from '../../actions';
 class Home extends React.Component{
     constructor() {
         super()
+        this.state = {
+            userInfo:{
+                name: 'test'
+            }
+        }
     }
     componentDidMount() {
         !this.props.userInfo.success && this.props.actions.fetchUserInfo();
     }
-    go = () =>{
-        console.log(this)
+    getUserInfo = () =>{
+        let that = this;
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState===4 && xhr.status===200){
+                that.setState({
+                    userInfo: JSON.parse(xhr.responseText).data
+                })
+            }
+        }
+        xhr.open('get','/api/user/getUserInfo')
+        xhr.send()
     }
     static fetch (store){
         return store.dispatch(actions.fetchUserInfo())
     }
     render(){
-        return <div>home 
+        let {userInfo} = this.state;
+
+        return (<div>home 
             <Link to="/about">go to about</Link>
-            <div id="test" onClick={this.go}>132132</div>
+            <div id="test" onClick={this.getUserInfo}>获取用户信息</div>
+            <div>{userInfo.name}</div>
             <div>{this.props.userInfo.message}</div>
-            </div>
+        </div>)
     }
 }
 function mapStateToProps(state) {
