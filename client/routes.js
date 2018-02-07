@@ -14,17 +14,29 @@ const isNode = () => {
 
 import Home from './components/home';
 import About from './components/about';
+import Login from './components/login';
+import Register from './components/register';
 
 const routes = [
     {
         path: '/',
         component: Home,
-        // loadData: () => getSomeData(),
+        title: '首页'
     },
     {
         path: '/about',
         component: About,
-        // loadData: () => getSomeData(),
+        title: '关于'
+    },
+    {
+        path: '/login',
+        component: Login,
+        title: '登陆'
+    },
+    {
+        path: '/register',
+        component: Register,
+        title: '注册'
     },
 ];
 export default routes;

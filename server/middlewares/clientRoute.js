@@ -10,13 +10,17 @@ const store = configureStore()
 const isMath = (arr,str) =>{
     return arr.some(v=>v.path===str);
 }
+const getMatchRoute = (arr, str) => {
+    return arr.filter(v => v.path === str);
+}
 async function clientRoute(ctx, next) {
     const context = {};
+    let title = '首页';
     if (isMath(routes,ctx.url)){//匹配组件路由
-        const branch = matchRoutes(routes, ctx.req.url);
-
-        const promises = branch.map(({ route }) => {//同步组件初始化华请求
+        const branch = getMatchRoute(routes, ctx.req.url);
+        const promises = branch.map(route => {//同步组件初始化华请求
             const fetch = route.component.fetch;
+            title = route.title;
             return fetch instanceof Function ? fetch(store) : Promise.resolve(null)
         });
         await Promise.all(promises).catch((err) => {
@@ -29,8 +33,8 @@ async function clientRoute(ctx, next) {
                 </StaticRouter>
             </Provider>
         )
-        
         await ctx.render('index', {
+            title: title,
             root: html,
             state: store.getState()
         })
