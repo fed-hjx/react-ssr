@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^3.2.0",
+    "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "ejs": "^2.5.7",
     "fs": "^0.0.1-security",

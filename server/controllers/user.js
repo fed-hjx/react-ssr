@@ -5,8 +5,8 @@ async function getUserInfo(ctx) {
     await new Promise((resolve,reject)=>{
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db("runoob");
-            dbo.collection("site").find({}).toArray(function (err, result) { // 返回集合中所有数据
+            var dbo = db.db("react");
+            dbo.collection("user").find({}).toArray(function (err, result) { // 返回集合中所有数据
                 if (err) throw err;
                 rs = result;
                 db.close();
@@ -27,4 +27,26 @@ async function getUserInfo(ctx) {
         success:1
     }
 }
-export default {getUserInfo}
+async function register(ctx) {
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://localhost:27017/";
+    await new Promise((resolve, reject) => {
+        MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("react");
+            dbo.collection("user").insertOne(ctx.request.body, function (err, res) {
+                if (err) throw err;
+                console.log("数据插入成功");
+                db.close();
+                resolve()
+            });
+        });
+    })
+    ctx.body = {
+        code: 10001,
+        message: "正确",
+        serviceTime: + new Date,
+        success: 1
+    }
+}
+export default {getUserInfo,register}
