@@ -13,6 +13,8 @@ async function info(ctx) {
         error: '',
         msg: ''
     };
+    const is_available = Jcommon.check_key_words(["token"], ctx, 'GET');
+    if (is_available == false) return; // 如果字段不合格，直接返回
     await new Promise((resolve,reject)=>{
         redis.get(ctx.request.query.token).then(rs=>{
             respondData.data = JSON.parse(rs);
