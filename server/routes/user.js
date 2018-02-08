@@ -3,7 +3,8 @@ import user from '../controllers/user'
 
 const router = new Router({prefix: '/user'})
 
-router.get('/getUserInfo', user.getUserInfo)
+router.get('/info', user.info)
 router.post('/register', user.register)
+router.post('/login', user.login)
 
 export default router
