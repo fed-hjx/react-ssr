@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import actions from "../../actions";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import actions from '../../actions';
 
 import { Form, Icon, Input, Button } from 'antd';
+import Axios from 'axios';
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -20,7 +21,17 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                Axios.post('/api/user/login', {
+                    user_name: values.userName,
+                    user_password: values.password
+                }).then(rs => {
+                    if (rs.data.status === 200) {
+                        alert('登录成功');
+                        this.props.history.push('/');
+                    } else {
+                        alert(rs.data.error)
+                    }
+                })
             }
         });
     }
@@ -58,7 +69,7 @@ class Login extends React.Component {
                         htmlType="submit"
                         disabled={hasErrors(getFieldsError())}
                     >
-                        Log in
+                        登录
           </Button>
                 </FormItem>
             </Form>

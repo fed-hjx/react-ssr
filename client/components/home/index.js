@@ -4,31 +4,38 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import {Link} from 'react-router-dom';
 import actions from '../../actions';
-
+import Axios from 'axios';
 class Home extends React.Component{
     constructor() {
         super()
         this.state = {
-            userInfo:{
-                name: 'test'
-            }
+            userInfo:{},
+            cookie: {},
+
         }
     }
     componentDidMount() {
-        !this.props.userInfo.success && this.props.actions.fetchUserInfo();
+        this.state.cookie = this.setCookie();
+        this.getUserInfo()
+        // !this.props.userInfo.success && this.props.actions.fetchUserInfo();
     }
     getUserInfo = () =>{
-        let that = this;
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if(xhr.readyState===4 && xhr.status===200){
-                that.setState({
-                    userInfo: JSON.parse(xhr.responseText).data
-                })
-            }
-        }
-        xhr.open('get','/api/user/getUserInfo')
-        xhr.send()
+        Axios.get('/api/user/info', {params: {
+            token: this.state.cookie.tk
+        }}).then(rs=>{
+            this.setState({
+                userInfo: rs.data.data
+            })
+        })
+    }
+    setCookie(){
+        let cookie = {};
+        let cookieArr = document.cookie.split(';');
+        cookieArr.forEach(v=>{
+            let arr = v.split('=');
+            cookie[arr[0].replace(/\s/g,'')] = arr[1];
+        })
+        return cookie;
     }
     static fetch (store){
         return store.dispatch(actions.fetchUserInfo())
@@ -36,11 +43,10 @@ class Home extends React.Component{
     render(){
         let {userInfo} = this.state;
 
-        return (<div>home 
-            <Link to="/about">go to about</Link>
-            <div id="test" onClick={this.getUserInfo}>获取用户信息</div>
-            <div>{userInfo.name}</div>
-            <div>{this.props.userInfo.message}</div>
+        return (<div>
+            <span style={{ marginLeft: "30px" }}>您好，{userInfo.username}</span>
+                <Link style={{ marginLeft: "30px" }} to="/login">登录</Link>
+                <Link to="/register">注册</Link>
         </div>)
     }
 }

@@ -50,6 +50,7 @@ async function login (ctx) {
     if (!(is_password_str && is_enable_length)) {
         respondData.status = 10001;
         respondData.error = "密码不符合规范";
+        ctx.body = respondData;
         return;
     }
     try {
@@ -75,12 +76,24 @@ async function login (ctx) {
             ctx.body = respondData;
             return;
         } else if (userverify.status === 1) {
-            const tokenexpiraton = 1800000;
+            const tokenexpiraton = 1000 * 60 * 60 * 2;
             const token = require('crypto').randomBytes(16).toString('hex');
             const tokenContent = userverify;
             
             redis.set(token, JSON.stringify(tokenContent));
             redis.expire(token, tokenexpiraton);
+
+            ctx.cookies.set(
+                'tk', token, {
+                    domain: '10.41.12.42', // 写cookie所在的域名
+                    path: '/', // 写cookie所在的路径
+                    maxAge: tokenexpiraton, // cookie有效时长 1天
+                    expires: new Date('2018-12-31'), // cookie失效时间
+                    httpOnly: false, // 是否只用于http请求中获取
+                    overwrite: false // 是否允许重写
+                }
+            );
+
             const userBackInfo = {};
             userBackInfo.token = token;
             userBackInfo.useremail = userverify.useremail;

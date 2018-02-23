@@ -14,9 +14,9 @@
 
 7.加入antd UI 库 done
 
-8.使用redis缓存token
+8.使用redis缓存token done
 
-9.实现登陆注册功能
+9.实现登陆注册功能 done
 
 10.实现上传文件（图片功能）
 
