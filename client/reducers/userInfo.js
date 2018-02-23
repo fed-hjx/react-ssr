@@ -1,5 +1,5 @@
 const baseData = {
-    message : 'hjx',
+    username : null,
 }
 const userInfo = (state = { ...baseData}, action) =>{
     switch (action.type) {

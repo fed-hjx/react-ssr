@@ -10,19 +10,13 @@ class Home extends React.Component{
         super()
         this.state = {
             userInfo:{},
-            cookie: {},
-
         }
     }
     componentDidMount() {
-        this.state.cookie = this.setCookie();
-        this.getUserInfo()
-        // !this.props.userInfo.success && this.props.actions.fetchUserInfo();
+        !this.props.userInfo.username && this.props.actions.fetchUserInfo();
     }
     getUserInfo = () =>{
-        Axios.get('/api/user/info', {params: {
-            token: this.state.cookie.tk
-        }}).then(rs=>{
+        Axios.get('/api/user/info').then(rs=>{
             this.setState({
                 userInfo: rs.data.data
             })
@@ -37,16 +31,26 @@ class Home extends React.Component{
         })
         return cookie;
     }
-    static fetch (store){
-        return store.dispatch(actions.fetchUserInfo())
+    logout = () =>{
+        Axios.get('/api/user/logout').then(rs => {
+            if(rs.data.status === 200){
+                this.props.actions.fetchUserInfo();
+            }else{
+                alert(rs.data.error)
+            }
+        })
     }
+    // static fetch (store){
+    //     return store.dispatch(actions.fetchUserInfo())
+    // }
     render(){
-        let {userInfo} = this.state;
+        let {userInfo} = this.props;
 
         return (<div>
             <span style={{ marginLeft: "30px" }}>您好，{userInfo.username}</span>
                 <Link style={{ marginLeft: "30px" }} to="/login">登录</Link>
                 <Link to="/register">注册</Link>
+                {userInfo.username && <span style={{ marginLeft: "30px" ,color:"red"}} onClick={this.logout}>退出登录</span>}
         </div>)
     }
 }

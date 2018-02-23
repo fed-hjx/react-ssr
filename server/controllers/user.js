@@ -13,15 +13,21 @@ async function info(ctx) {
         error: '',
         msg: ''
     };
-    const is_available = Jcommon.check_key_words(["token"], ctx, 'GET');
-    if (is_available == false) return; // 如果字段不合格，直接返回
-    await new Promise((resolve,reject)=>{
-        redis.get(ctx.request.query.token).then(rs=>{
-            respondData.data = JSON.parse(rs);
-            delete respondData.data.userpwd;
-            resolve()
-        });
-    })
+    const token = ctx.cookies.get('tk') || null;
+
+    console.log(token,777)
+    if(token){
+        await new Promise((resolve,reject)=>{
+            redis.get(token).then(rs=>{
+                respondData.data = JSON.parse(rs);
+                delete respondData.data.userpwd;
+                resolve()
+            });
+        })
+    }else{
+        respondData.status = 1007;
+        respondData.error = '你还没登录';
+    }
     ctx.body = respondData
 }
 /**
@@ -89,7 +95,7 @@ async function login (ctx) {
                     path: '/', // 写cookie所在的路径
                     maxAge: tokenexpiraton, // cookie有效时长 1天
                     expires: new Date('2018-12-31'), // cookie失效时间
-                    httpOnly: false, // 是否只用于http请求中获取
+                    httpOnly: true, // 是否只用于http请求中获取
                     overwrite: false // 是否允许重写
                 }
             );
@@ -217,4 +223,14 @@ const findUserVerify = async function (name, password) {
         });
     })
 }
-export default {info,register,login}
+async function logout(ctx) {
+    const respondData = {
+        status: 200,
+        data: {},
+        error: '',
+        msg: '退出成功'
+    };
+    ctx.cookies.set('tk', null);
+    ctx.body = respondData
+}
+export default { info, register, login, logout}
