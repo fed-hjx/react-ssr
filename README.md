@@ -1,23 +1,25 @@
-# 利用 React / koa 实现的应用。
+# REACT SSR
 
-1.配置 webpack + react 开发环境 done
+> 利用 *koa* 和 *react* 实现的应用
 
-2.配置 react-router + redux     done
+- [x] 配置 `webpack` + `react` 开发环境
 
-3.调试服务端代码，使用koa ejs 渲染页面并返回 done
+- [x] 配置 `react-router` + `redux`
 
-4.服务端同步请求接口 done
+- [x] 调试服务端代码，使用 `koa ejs` 渲染页面并返回
 
-5.接收客户端请求并处理 done
+- [x] 服务端同步请求接口
 
-6.链接mogodb 数据库 done
+- [x] 接收客户端请求并处理
 
-7.加入antd UI 库 done
+- [x] 链接 `mogodb` 数据库
 
-8.使用redis缓存token done
+- [x] 加入 `antd UI` 库
 
-9.实现登陆注册功能 done
+- [x] 使用 `redis` 缓存token
 
-10.实现上传文件（图片功能）
+- [x] 实现登陆注册功能
 
-11.pm2 部署
+- [x] 实现上传文件（图片功能）
+
+- [x] `pm2` 部署
